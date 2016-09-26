@@ -21,7 +21,10 @@ class MaiZiVideo(object):
 		response.encoding = 'utf-8'
 		html_source = response.text
 		course_name = re.search(r'<h1 class="color33 font24 marginB10">(.*?)</h1>', html_source, re.S).group(1)
-		os.mkdir(file_dir + course_name)
+		try:
+		    os.mkdir(file_dir + course_name)
+		except WindowsError as we:
+		    print "已存在文件夹"
 		all_course_url_and_name = re.findall(r'<li><a href="(.*?)" target="_blank" class="font14 color66"><span class="fl">(.*?)</span>', html_source, re.S)
 
 		for each_course in all_course_url_and_name:
